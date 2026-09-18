@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <!-- Authored material: travertine counter. Pitted stone grain, no raster. -->
+  <defs>
+    <filter id="stone" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.004" numOctaves="4" seed="3" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="0 0 0 0 0.80  0 0 0 0 0.75  0 0 0 0 0.62  0 0 0 0.9 -0.35" result="bands"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="11" result="p"/>
+      <feColorMatrix in="p" type="matrix" values="0 0 0 0 0.70  0 0 0 0 0.64  0 0 0 0 0.50  0 0 0 1.6 -1.05" result="pits"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="1" seed="21" result="f"/>
+      <feColorMatrix in="f" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.08 0" result="fine"/>
+      <feMerge>
+        <feMergeNode in="bands"/>
+        <feMergeNode in="pits"/>
+        <feMergeNode in="fine"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="#efe8da"/>
+  <rect width="1200" height="1200" filter="url(#stone)" opacity="0.75"/>
+</svg>

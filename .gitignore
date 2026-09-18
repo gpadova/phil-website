@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable local state (large captures / local config)
+.impeccable/review/
+.impeccable/reference/
+.impeccable/config.local.json

@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pinpoint Financial — planwithpinpoint.com
 
-## Getting Started
+Landing page for Phil Isan, Certified IUL Specialist (Boca Raton, FL). One page, one action: "I'd like to learn more."
 
-First, run the development server:
+- Product truth: `PRODUCT.md` · Client brief: `docs/client-brief.md` · Brand research: `docs/research/brand-audit.md`
+- Design system: `DESIGN.md` (world: *The Banking Hall* — banker's-green marble, brass, travertine; the numbers live behind a vault door)
+- Surface brief / direction contract: `.impeccable/surfaces/src-app-page-tsx.md`
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev      # http://localhost:3000
+pnpm build && pnpm start
+pnpm lint     # biome
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Stack: Next.js 16 (App Router), React 19, Tailwind v4, fonts via `next/font` (Marcellus, Jost, Source Serif 4). Fully static — no backend; the form composes an email to Phil.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/page.tsx` — the page (hall → three reasons → what it does → who → process → vault/form → footer)
+- `src/app/globals.css` — tokens, materials, type roles, teller-window controls, plates, motion
+- `src/components/` — `Reveal` (scroll reveal), `Ledger` (floor vs market table), `Vault` (drawn vault door), `LearnMoreForm`, `Mark` (compass)
+- `public/materials/*.svg` — authored generative textures (marble, panel marble, travertine, brass)
+- `public/brand/phil-portrait.jpg` — shipping portrait (provenance in the JPEG comment)
 
-## Learn More
+## Open items (need Phil)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Booking tool: his Calendly (`calendly.com/phillipisan/30min`) exists but is unconfirmed — not linked yet.
+- License number / states for the footer disclaimer; compliance read of the copy.
+- DNS handoff from Hostinger; deploy target.
+- A commissioned portrait and his own video for a future "learn" section.

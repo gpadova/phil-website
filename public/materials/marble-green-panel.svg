@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1400" viewBox="0 0 1400 1400">
+  <!-- Authored material: banker's green marble (lighter panel). Generative calcite veining over a green field, no raster. -->
+  <defs>
+    <filter id="vein" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0025 0.0012" numOctaves="4" seed="17" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.16  0 0 0 0 0.50  0 0 0 0 0.38  0 0 0 0.9 -0.2" result="cloud"/>
+      <feTurbulence type="turbulence" baseFrequency="0.0045 0.0025" numOctaves="3" seed="9" result="t"/>
+      <feColorMatrix in="t" type="matrix" values="0 0 0 0 0.86  0 0 0 0 0.84  0 0 0 0 0.70  0 0 0 7 -5.9" result="veinA"/>
+      <feTurbulence type="turbulence" baseFrequency="0.0022 0.0065" numOctaves="3" seed="31" result="t2"/>
+      <feColorMatrix in="t2" type="matrix" values="0 0 0 0 0.70  0 0 0 0 0.80  0 0 0 0 0.66  0 0 0 6 -5.1" result="veinB"/>
+      <feTurbulence type="turbulence" baseFrequency="0.009 0.003" numOctaves="2" seed="52" result="t3"/>
+      <feColorMatrix in="t3" type="matrix" values="0 0 0 0 0.55  0 0 0 0 0.72  0 0 0 0 0.58  0 0 0 5 -4.4" result="veinC"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="1" seed="4" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.10 0" result="grain"/>
+      <feMerge>
+        <feMergeNode in="cloud"/>
+        <feMergeNode in="veinC"/>
+        <feMergeNode in="veinB"/>
+        <feMergeNode in="veinA"/>
+        <feMergeNode in="grain"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1400" height="1400" fill="#17503f"/>
+  <rect width="1400" height="1400" filter="url(#vein)" opacity="0.9"/>
+</svg>

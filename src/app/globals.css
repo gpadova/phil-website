@@ -1,26 +1,473 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   Pinpoint Financial — the banking hall
+   Walls are banker's-green marble. Counters and documents are
+   travertine. Every rail, rule and control edge is brass, and
+   brass is the only light source in the room.
+   ───────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --hall: #0d3629;
+  --hall-deep: #082419;
+  --hall-vein: #17503f;
+  --hall-lit: #1f6a53;
+
+  --travertine: #efe8da;
+  --travertine-deep: #e3d9c5;
+  --travertine-shadow: #cfc3a9;
+
+  --brass: #c9a24d;
+  --brass-lit: #e6c877;
+  --brass-deep: #8f6f2a;
+  --brass-ink: #46340e;
+
+  --ink: #0b1210;
+  --ink-soft: #2e3b35;
+  --ink-mute: #5f6c66;
+
+  --on-hall: #f2ecdd;
+  --on-hall-soft: #cfe0d5;
+  --on-hall-mute: #9db8aa;
+
+  --font-engraved: var(--font-marcellus), "Trajan Pro", "Cinzel", serif;
+  --font-signage: var(--font-jost), "Futura", "Avenir Next", sans-serif;
+  --font-text: var(--font-source-serif), "Charter", Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --rail: 1px;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --measure: 62ch;
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-hall: var(--hall);
+  --color-hall-deep: var(--hall-deep);
+  --color-hall-vein: var(--hall-vein);
+  --color-hall-lit: var(--hall-lit);
+  --color-travertine: var(--travertine);
+  --color-travertine-deep: var(--travertine-deep);
+  --color-brass: var(--brass);
+  --color-brass-lit: var(--brass-lit);
+  --color-brass-deep: var(--brass-deep);
+  --color-brass-ink: var(--brass-ink);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-on-hall: var(--on-hall);
+  --color-on-hall-soft: var(--on-hall-soft);
+  --color-on-hall-mute: var(--on-hall-mute);
+  --font-engraved: var(--font-engraved);
+  --font-signage: var(--font-signage);
+  --font-text: var(--font-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--hall-deep);
+  color: var(--on-hall);
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga";
+  text-rendering: optimizeLegibility;
+}
+
+/* Browser surfaces carry the design too. */
+::selection {
+  background: var(--brass);
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 2px solid var(--brass-lit);
+  outline-offset: 3px;
+}
+input,
+select,
+textarea {
+  caret-color: var(--brass);
+  accent-color: var(--brass);
+}
+html {
+  scrollbar-color: var(--brass-deep) var(--hall-deep);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--hall-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--brass-deep);
+  border: 2px solid var(--hall-deep);
+  border-radius: 0;
+}
+a {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+/* ── Materials ──────────────────────────────────────────────── */
+
+/* Green marble: the SVG veining in /brand/materials is authored,
+   layered over a deep green field so the veins read as stone. */
+.marble {
+  background-color: var(--hall);
+  background-image: url("/materials/marble-green.svg");
+  background-size: 1400px 1400px;
+}
+/* The lighter veined panel: the alternate band between hall walls. */
+.marble-panel {
+  background-color: var(--hall-vein);
+  background-image: url("/materials/marble-green-panel.svg");
+  background-size: 1400px 1400px;
+}
+
+/* Travertine: the counter, and every document laid on it. */
+.travertine {
+  background-color: var(--travertine);
+  background-image: url("/materials/travertine.svg");
+  background-size: 1200px 1200px;
+  color: var(--ink);
+}
+
+/* Brass: brushed, warm, and the only thing that emits light. */
+.brass {
+  background-color: var(--brass);
+  background-image: url("/materials/brass.svg");
+  background-size: 100% auto;
+  color: var(--ink);
+}
+
+/* A brass hairline with a chamfered end: the rule of the house. */
+.rule {
+  position: relative;
+  height: var(--rail);
+  background: linear-gradient(
+    90deg,
+    var(--brass-deep),
+    var(--brass) 18%,
+    var(--brass) 82%,
+    var(--brass-deep)
+  );
+}
+.rule::before,
+.rule::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  background: var(--brass);
+  transform: rotate(45deg);
+}
+.rule::before {
+  left: -3px;
+}
+.rule::after {
+  right: -3px;
+}
+
+/* ── Type ───────────────────────────────────────────────────── */
+
+.engraved {
+  font-family: var(--font-engraved);
+  font-weight: 400;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  line-height: 0.98;
+  color: var(--on-hall);
+  text-shadow:
+    0 1px 0 rgba(255, 245, 220, 0.12),
+    0 -1px 0 rgba(0, 0, 0, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.35);
+  text-wrap: balance;
+}
+.engraved-lit {
+  color: var(--brass-lit);
+  text-shadow:
+    0 1px 0 rgba(255, 240, 200, 0.25),
+    0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(230, 200, 119, 0.28);
+}
+.engraved-ink {
+  color: var(--ink);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6),
+    0 -1px 0 rgba(0, 0, 0, 0.22);
+}
+.signage {
+  font-family: var(--font-signage);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+.tabular {
+  font-family: var(--font-signage);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum", "lnum";
+}
+.prose-text {
+  font-family: var(--font-text);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+.prose-text p + p {
+  margin-top: 1.1em;
+}
+
+/* ── Controls: teller windows ───────────────────────────────── */
+
+.teller {
+  --glow: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.5rem;
+  font-family: var(--font-signage);
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background-color: var(--travertine);
+  background-image: url("/materials/travertine.svg");
+  background-size: 600px 600px;
+  border: 1px solid var(--brass);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 214, 0.35),
+    0 0 0 4px var(--hall-deep),
+    0 0 0 5px var(--brass-deep),
+    0 10px 24px -8px rgba(0, 0, 0, 0.6);
+  transition:
+    box-shadow 420ms var(--ease-out-expo),
+    transform 420ms var(--ease-out-expo),
+    background-color 420ms var(--ease-out-expo);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.teller::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 0 rgba(230, 200, 119, 0);
+  transition: box-shadow 420ms var(--ease-out-expo);
+}
+.teller:hover,
+.teller:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 214, 0.6),
+    0 0 0 4px var(--hall-deep),
+    0 0 0 5px var(--brass-lit),
+    0 0 28px 2px rgba(230, 200, 119, 0.35),
+    0 14px 28px -8px rgba(0, 0, 0, 0.6);
+}
+.teller:hover::after,
+.teller:focus-visible::after {
+  box-shadow: inset 0 0 18px 0 rgba(230, 200, 119, 0.45);
+}
+.teller:active {
+  transform: translateY(0);
+}
+.teller[aria-disabled="true"],
+.teller:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+.teller-on-travertine {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 214, 0.35),
+    0 0 0 4px var(--travertine),
+    0 0 0 5px var(--brass-deep),
+    0 10px 24px -8px rgba(0, 0, 0, 0.35);
+}
+.teller-on-travertine:hover,
+.teller-on-travertine:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 244, 214, 0.6),
+    0 0 0 4px var(--travertine),
+    0 0 0 5px var(--brass-lit),
+    0 0 28px 2px rgba(201, 162, 77, 0.45),
+    0 14px 28px -8px rgba(0, 0, 0, 0.35);
+}
+.teller-quiet {
+  background: transparent;
+  color: var(--on-hall);
+  border-color: var(--brass-deep);
+  box-shadow: none;
+}
+.teller-quiet:hover,
+.teller-quiet:focus-visible {
+  box-shadow: 0 0 24px 0 rgba(230, 200, 119, 0.25);
+  border-color: var(--brass-lit);
+  color: var(--brass-lit);
+}
+
+/* Brass-edged plate for portraits and documents */
+.plate {
+  position: relative;
+  border: 1px solid var(--brass);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 0 0 6px var(--hall-deep),
+    0 0 0 7px var(--brass-deep),
+    0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+.plate-on-travertine {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 0 0 6px var(--travertine),
+    0 0 0 7px var(--brass-deep),
+    0 30px 60px -24px rgba(0, 0, 0, 0.45);
+}
+
+/* Form fields: a travertine field inside a brass frame */
+.field {
+  width: 100%;
+  font-family: var(--font-text);
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--travertine);
+  border: 1px solid var(--brass-deep);
+  padding: 0.85rem 1rem;
+  transition:
+    box-shadow 300ms var(--ease-out-expo),
+    border-color 300ms var(--ease-out-expo);
+  border-radius: 0;
+  appearance: none;
+}
+.field::placeholder {
+  color: var(--ink-mute);
+  opacity: 1;
+}
+.field:hover {
+  border-color: var(--brass);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--brass-lit);
+  box-shadow:
+    0 0 0 3px var(--hall-deep),
+    0 0 0 4px var(--brass),
+    0 0 20px 0 rgba(230, 200, 119, 0.35);
+}
+.field[aria-invalid="true"] {
+  border-color: #b3462e;
+  box-shadow: 0 0 0 1px #b3462e;
+}
+select.field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%238f6f2a' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* ── Motion ─────────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal[data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 900ms var(--ease-out-expo),
+      transform 900ms var(--ease-out-expo);
+  }
+  .reveal[data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Ledger rows print into place */
+.ledger-row {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-print] .ledger-row {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+    transition:
+      opacity 520ms var(--ease-out-expo),
+      transform 520ms var(--ease-out-expo),
+      filter 520ms var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 45ms);
+  }
+  [data-print="in"] .ledger-row {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* The vault: the door swings once. */
+.vault-door {
+  transform-origin: 6% 50%;
+  transform: perspective(1400px) rotateY(0deg);
+  transition: transform 1800ms var(--ease-out-expo);
+  will-change: transform;
+}
+.vault-wheel {
+  transform-origin: 50% 50%;
+  transition: transform 1600ms var(--ease-out-expo);
+}
+[data-vault="open"] .vault-door {
+  transform: perspective(1400px) rotateY(-62deg);
+}
+[data-vault="open"] .vault-wheel {
+  transform: rotate(-180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vault-door,
+  .vault-wheel {
+    transition: none;
+  }
+  [data-vault="open"] .vault-door {
+    transform: perspective(1400px) rotateY(-62deg);
+  }
+}
+
+/* Behind the vault: the illustration, unreadable by design. */
+.gated {
+  filter: blur(5px);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Utility */
+.container-hall {
+  width: 100%;
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.balance {
+  text-wrap: balance;
+}
+/* Grid children never force the page wider than the phone. */
+.container-hall .grid > * {
+  min-width: 0;
+}
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
